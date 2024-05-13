@@ -91,6 +91,7 @@ const editingForm = document.forms['edit-profile'];
 const nameInput = editingForm.elements.name
 const jobInput = editingForm.elements.description;
 
+
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleFormSubmitForEditing(evt) {
@@ -127,6 +128,9 @@ function handlerFormSubmitForAddingCard(event) {
         name: valueForCity,
         link: valueForLink
     }
-    createCard(newCard, removeCard(event))
-    listOfCards.prepend(newCard)
+   const cardForAdding= createCard(newCard, removeCard)
+    listOfCards.prepend(cardForAdding);
+    closeCurrentPopup();
+    newCardForm.reset();
 }
+newCardForm.addEventListener('submit', handlerFormSubmitForAddingCard);
