@@ -1,5 +1,6 @@
 import {initialCards} from "./cards";
 import './../pages/index.css';
+import {showPopupEditing,showPopupAdding,showPopupCard} from "./popup";
 
 // @todo: Темплейт карточки
 const cardTemplate = document.querySelector('#card-template').content;
@@ -32,53 +33,22 @@ initialCards.forEach(function (card) {
     listOfCards.append(newCard)
 })
 
-function showPopup(popup) {
-    popup.classList.add('popup_is-opened');
-    document.addEventListener('keydown', onKeyPress);
-}
-
-function closePopup(popup) {
-    popup.classList.remove('popup_is-opened');
-    document.removeEventListener('keydown', onKeyPress)
-}
 
 
-function onKeyPress(event) {
-    if (event.key === 'Escape') {
-        closeCurrentPopup();
-    }
-}
-
-function closeCurrentPopup() {
-    const currentPopup = document.querySelector('.popup_is-opened');
-    closePopup(currentPopup);
-}
 
 const editButton = document.querySelector('.profile__edit-button');
-const popupForEditing = document.querySelector('.popup_type_edit');
 editButton.addEventListener('click', function () {
-    nameInput.value = nameOfUserInPage.innerHTML;
-    jobInput.value = descriptionOfUserInPage.innerHTML
-    showPopup(popupForEditing);
+    showPopupEditing(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText)
 });
 
 const addButton = document.querySelector('.profile__add-button');
-const popupNewCard = document.querySelector('.popup_type_new-card');
-addButton.addEventListener('click', () => showPopup(popupNewCard));
+addButton.addEventListener('click',  showPopupAdding);
 
 const cardImg = document.querySelector('.card__image');
 const popupImg = document.querySelector('.popup_type_image');
-cardImg.addEventListener('click', () => showPopup(popupImg));
+// cardImg.addEventListener('click', () => showPopup(popupImg));
 
 
-const popups = document.querySelectorAll('.popup');
-popups.forEach(function (popup) {
-    popup.addEventListener('mousedown', function (event) {
-        if (event.target.classList.contains('popup__close') || event.target.classList.contains('popup')) {
-            closeCurrentPopup();
-        }
-    })
-})
 
 
 const nameOfUserInPage = document.querySelector('.profile__title');
@@ -145,8 +115,6 @@ function like(event) {
         likeButton.classList.add('card__like-button_is-active')
     }
 }
-
-
 
 listOfCards.addEventListener('click', function (event) {
     if (event.target.classList.contains('card__like-button')) {
