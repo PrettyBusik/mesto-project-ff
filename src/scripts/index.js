@@ -1,7 +1,7 @@
 import {initialCards} from "./cards";
 import './../pages/index.css';
 import {showPopupEditing,showPopupAdding,showPopupCard, closeCurrentPopup} from "./popup";
-import {fillEditingForm,subscribeToEditingFormSubmitting} from "./forms";
+import {fillEditingForm,subscribeToEditingFormSubmitting, subscribeToAddingFormSubmitting} from "./forms";
 
 // @todo: Темплейт карточки
 const cardTemplate = document.querySelector('#card-template').content;
@@ -68,26 +68,17 @@ function handleFormSubmitForEditing(newName, newJob) {
 subscribeToEditingFormSubmitting( handleFormSubmitForEditing);
 
 
-const newCardForm = document.forms['new-place'];
-const cityInput = newCardForm.elements['place-name'];
-const linkInput = newCardForm.elements.link;
-
-function handlerFormSubmitForAddingCard(event) {
-    event.preventDefault();
-    const valueForCity = cityInput.value;
-    const valueForLink = linkInput.value;
+function handlerFormSubmitForAddingCard(cityName, imgLink) {
     const newCard = {
-        name: valueForCity,
-        link: valueForLink
+        name: cityName,
+        link: imgLink
     }
     const cardForAdding = createCard(newCard, removeCard);
     listOfCards.prepend(cardForAdding);
     closeCurrentPopup();
-    newCardForm.reset();
 }
 
-newCardForm.addEventListener('submit', handlerFormSubmitForAddingCard);
-
+subscribeToAddingFormSubmitting(handlerFormSubmitForAddingCard);
 
 function like(event) {
     const likeButton = event.target;

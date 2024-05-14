@@ -27,3 +27,17 @@ export function subscribeToEditingFormSubmitting(callback){
         callback(newName, newJob);
     })
 }
+
+/**
+ *
+ * @param {function(string, string)} callback
+ */
+export function  subscribeToAddingFormSubmitting(callback){
+    addingForm.addEventListener('submit', function (event){
+        event.preventDefault();
+        const newCityValue= addingForm.elements['place-name'].value;
+        const  newLinkValue= addingForm.elements.link.value;
+        callback(newCityValue, newLinkValue);
+        addingForm.reset();
+    })
+}
