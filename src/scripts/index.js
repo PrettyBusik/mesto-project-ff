@@ -8,7 +8,7 @@ const cardTemplate = document.querySelector('#card-template').content;
 const listOfCards = document.querySelector('.places__list');
 
 // @todo: Функция создания карточки
-function createCard(card, removingCard) {
+function createCard(card, removingCard, like) {
     const newCard = cardTemplate.querySelector('.card').cloneNode(true);
     newCard.querySelector('.card__image').src = card.link;
     newCard.querySelector('.card__title').textContent = card.name;
@@ -34,7 +34,7 @@ initialCards.forEach(function (card) {
 
 function showPopup(popup) {
     popup.classList.add('popup_is-opened');
-    document.addEventListener('keydown', onKeyPress)
+    document.addEventListener('keydown', onKeyPress);
 }
 
 function closePopup(popup) {
@@ -45,11 +45,11 @@ function closePopup(popup) {
 
 function onKeyPress(event) {
     if (event.key === 'Escape') {
-       closeCurrentPopup();
+        closeCurrentPopup();
     }
 }
 
-function closeCurrentPopup(){
+function closeCurrentPopup() {
     const currentPopup = document.querySelector('.popup_is-opened');
     closePopup(currentPopup);
 }
@@ -75,7 +75,7 @@ const popups = document.querySelectorAll('.popup');
 popups.forEach(function (popup) {
     popup.addEventListener('mousedown', function (event) {
         if (event.target.classList.contains('popup__close') || event.target.classList.contains('popup')) {
-           closeCurrentPopup();
+            closeCurrentPopup();
         }
     })
 })
@@ -128,9 +128,29 @@ function handlerFormSubmitForAddingCard(event) {
         name: valueForCity,
         link: valueForLink
     }
-   const cardForAdding= createCard(newCard, removeCard)
+    const cardForAdding = createCard(newCard, removeCard);
     listOfCards.prepend(cardForAdding);
     closeCurrentPopup();
     newCardForm.reset();
 }
+
 newCardForm.addEventListener('submit', handlerFormSubmitForAddingCard);
+
+
+function like(event) {
+    const likeButton = event.target;
+    if (event.target.classList.contains('card__like-button_is-active')) {
+        likeButton.classList.remove('card__like-button_is-active')
+    } else {
+        likeButton.classList.add('card__like-button_is-active')
+    }
+}
+
+
+
+listOfCards.addEventListener('click', function (event) {
+    if (event.target.classList.contains('card__like-button')) {
+        like(event)
+    }
+})
+
