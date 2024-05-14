@@ -1,6 +1,7 @@
 import {initialCards} from "./cards";
 import './../pages/index.css';
-import {showPopupEditing,showPopupAdding,showPopupCard} from "./popup";
+import {showPopupEditing,showPopupAdding,showPopupCard, closeCurrentPopup} from "./popup";
+import {fillEditingForm,subscribeToEditingFormSubmitting} from "./forms";
 
 // @todo: Темплейт карточки
 const cardTemplate = document.querySelector('#card-template').content;
@@ -38,7 +39,8 @@ initialCards.forEach(function (card) {
 
 const editButton = document.querySelector('.profile__edit-button');
 editButton.addEventListener('click', function () {
-    showPopupEditing(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText)
+    fillEditingForm(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText)
+    showPopupEditing();
 });
 
 const addButton = document.querySelector('.profile__add-button');
@@ -55,35 +57,15 @@ const nameOfUserInPage = document.querySelector('.profile__title');
 const descriptionOfUserInPage = document.querySelector('.profile__description');
 
 
-// Находим форму в DOM
-const editingForm = document.forms['edit-profile'];
-// Находим поля формы в DOM
-const nameInput = editingForm.elements.name
-const jobInput = editingForm.elements.description;
+function handleFormSubmitForEditing(newName, newJob) {
 
-
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-function handleFormSubmitForEditing(evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    // Так мы можем определить свою логику отправки.
-    // О том, как это делать, расскажем позже.
-
-    // Получите значение полей jobInput и nameInput из свойства value
-    const valueForName = nameInput.value;
-    const valueForJob = jobInput.value;
-
-    // Выберите элементы, куда должны быть вставлены значения полей
-
-    // Вставьте новые значения с помощью textContent
-    nameOfUserInPage.textContent = valueForName;
-    descriptionOfUserInPage.textContent = valueForJob;
+    nameOfUserInPage.textContent = newName;
+    descriptionOfUserInPage.textContent = newJob;
     closeCurrentPopup();
 }
 
 // Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-editingForm.addEventListener('submit', handleFormSubmitForEditing);
+subscribeToEditingFormSubmitting( handleFormSubmitForEditing);
 
 
 const newCardForm = document.forms['new-place'];

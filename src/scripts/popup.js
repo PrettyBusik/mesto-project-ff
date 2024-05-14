@@ -20,19 +20,8 @@ export function showPopupAdding(){
     openPopup(popupAdding);
 }
 
-/**
- *
- * @param {string} userName
- * @param {string} userJob
- */
-export function showPopupEditing(userName, userJob){
-    const editingForm = document.forms['edit-profile'];
-    const nameInput = editingForm.elements.name
-    const jobInput = editingForm.elements.description;
 
-    nameInput.value=userName;
-    jobInput.value=userJob;
-
+export function showPopupEditing(){
     openPopup(popupEdit);
 }
 
@@ -45,7 +34,7 @@ function openPopup(popup){
     document.addEventListener('keydown', onKeyPress);
 }
 
-function closeCurrentPopup() {
+export  function closeCurrentPopup() {
     const currentPopup = document.querySelector('.popup_is-opened');
     currentPopup.classList.remove('popup_is-opened');
     document.removeEventListener('keydown', onKeyPress);
