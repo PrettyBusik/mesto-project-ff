@@ -63,20 +63,17 @@ function creatCardNode(city, link) {
 }
 
 function handlerDeletingButton(event) {
-    if (event.target.classList.contains('card__delete-button')) {
-        const cardForRemoving = event.target.closest('.card');
-        cardForRemoving.remove();
-    }
+    const cardForRemoving = event.target.closest('.card');
+    cardForRemoving.remove();
 }
 
 function handlerLike(event) {
     const likeButton = event.target;
-    if (event.target.classList.contains('card__like-button')) {
-        if (likeButton.classList.contains('card__like-button_is-active')) {
-            likeButton.classList.remove('card__like-button_is-active')
-        } else {
-            likeButton.classList.add('card__like-button_is-active')
-        }
+
+    if (likeButton.classList.contains('card__like-button_is-active')) {
+        likeButton.classList.remove('card__like-button_is-active')
+    } else {
+        likeButton.classList.add('card__like-button_is-active')
     }
 }
 
@@ -96,6 +93,12 @@ function handlerCardClick(event) {
 }
 
 addInitialCards();
-listOfCards.addEventListener('click', handlerDeletingButton);
-listOfCards.addEventListener('click', handlerLike);
-listOfCards.addEventListener('click', handlerCardClick)
+listOfCards.addEventListener('click', function (event) {
+    if (event.target.classList.contains('card__delete-button')) {
+        handlerDeletingButton(event)
+    } else if (event.target.classList.contains('card__like-button')) {
+        handlerLike(event);
+    } else {
+        handlerCardClick(event)
+    }
+})
