@@ -2,7 +2,7 @@ import {showPopupCard} from "./popup";
 
 const cardTemplate = document.querySelector('#card-template').content;
 const listOfCards = document.querySelector('.places__list');
-
+const popupCard= document.querySelector('.popup_type_image');
 
 const initialCards = [
     {
@@ -89,7 +89,7 @@ function handlerCardClick(event) {
     const imgSrc= cardNode.querySelector('.card__image').src;
     const titleOfCard= cardNode.querySelector('.card__title').innerText;
 
-    showPopupCard(imgSrc, titleOfCard);
+    showPopupCard(imgSrc, titleOfCard, popupCard);
 }
 
 addInitialCards();
