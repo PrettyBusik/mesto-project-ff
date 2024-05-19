@@ -42,12 +42,12 @@ addButton.addEventListener('click',  ()=>{
     openPopup(popupAdding)
 });
 
-function handlerFormSubmitForAddingCard(nameOfPlace, imgLink) {
+function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
     addCard(nameOfPlace, imgLink);
     closeCurrentPopup();
 }
 
-subscribeToAddingFormSubmitting(handlerFormSubmitForAddingCard);
+subscribeToAddingFormSubmitting(handleFormSubmitForAddingCard);
 
 
 
