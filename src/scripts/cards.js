@@ -34,11 +34,11 @@ const initialCards = [
 
 /**
  *
- * @param {string} city
+ * @param {string} nameOfPlace
  * @param {string} link
  */
-export function addCard(city, link) {
-    const newCard = creatCardNode(city, link)
+export function addCard(nameOfPlace, link) {
+    const newCard = creatCardNode(nameOfPlace, link)
     listOfCards.prepend(newCard);
 }
 

@@ -42,12 +42,8 @@ addButton.addEventListener('click',  ()=>{
     openPopup(popupAdding)
 });
 
-function handlerFormSubmitForAddingCard(cityName, imgLink) {
-    const newCard = {
-        name: cityName,
-        link: imgLink
-    }
-    addCard(newCard.name, newCard.link);
+function handlerFormSubmitForAddingCard(nameOfPlace, imgLink) {
+    addCard(nameOfPlace, imgLink);
     closeCurrentPopup();
 }
 
