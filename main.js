@@ -28,7 +28,6 @@ var popupCard = document.querySelector('.popup_type_image');
 function addCard(nameOfPlace, link) {
   var newCard = creatCardNode(nameOfPlace, link, handleDeletingButton, handleLike, handleCardClick);
   listOfCards.prepend(newCard);
-  console.log(1);
 }
 function addInitialCards() {
   _initialCards__WEBPACK_IMPORTED_MODULE_1__.initialCards.forEach(function (card) {
