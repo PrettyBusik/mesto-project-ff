@@ -1,29 +1,30 @@
-const editingForm= document.forms['edit-profile'];
-const addingForm= document.forms['new-place'];
-
+const editingForm = document.forms['edit-profile'];
+const addingForm = document.forms['new-place'];
+const nameInputInEditingForm = editingForm.elements.name;
+const descriptionInputInEditingForm = editingForm.elements.description;
 
 /**
  *
  * @param {string} userName
  * @param {string} userJob
  */
-export function  fillEditingForm(userName, userJob){
+export function fillEditingForm(userName, userJob) {
     const nameInput = editingForm.elements.name
     const jobInput = editingForm.elements.description;
 
-    nameInput.value=userName;
-    jobInput.value=userJob;
+    nameInput.value = userName;
+    jobInput.value = userJob;
 }
 
 /**
  *
  * @param {function(string, string)} callback
  */
-export function subscribeToEditingFormSubmitting(callback){
-    editingForm.addEventListener('submit',function (event){
+export function subscribeToEditingFormSubmitting(callback) {
+    editingForm.addEventListener('submit', function (event) {
         event.preventDefault();
-        const newName= editingForm.elements.name.value;
-        const newJob= editingForm.elements.description.value;
+        const newName = editingForm.elements.name.value;
+        const newJob = editingForm.elements.description.value;
         callback(newName, newJob);
     })
 }
@@ -32,12 +33,15 @@ export function subscribeToEditingFormSubmitting(callback){
  *
  * @param {function(string, string)} callback
  */
-export function  subscribeToAddingFormSubmitting(callback){
-    addingForm.addEventListener('submit', function (event){
+export function subscribeToAddingFormSubmitting(callback) {
+    addingForm.addEventListener('submit', function (event) {
         event.preventDefault();
-        const newCityValue= addingForm.elements['place-name'].value;
-        const  newLinkValue= addingForm.elements.link.value;
+        const newCityValue = addingForm.elements['place-name'].value;
+        const newLinkValue = addingForm.elements.link.value;
         callback(newCityValue, newLinkValue);
         addingForm.reset();
     })
 }
+
+
+

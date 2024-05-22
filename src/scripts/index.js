@@ -2,6 +2,9 @@ import './../pages/index.css';
 import {showPopupCard, closeCurrentPopup, openPopup} from "./popup";
 import {fillEditingForm,subscribeToEditingFormSubmitting, subscribeToAddingFormSubmitting} from "./forms";
 import {addCard} from "./cards";
+import {enableValidation, clearValidation} from "./validation";
+import {getInfoAboutUser, getCards} from "./api";
+
 const popupEdit= document.querySelector('.popup_type_edit');
 const popupAdding= document.querySelector('.popup_type_new-card');
 const popups = document.querySelectorAll('.popup');
@@ -10,6 +13,15 @@ const popups = document.querySelectorAll('.popup');
 
 const nameOfUserInPage = document.querySelector('.profile__title');
 const descriptionOfUserInPage = document.querySelector('.profile__description');
+
+const config= {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
+}
 
 popups.forEach(function (popup) {
     popup.addEventListener('mousedown', function (event) {
@@ -23,8 +35,8 @@ popups.forEach(function (popup) {
 const editButton = document.querySelector('.profile__edit-button');
 editButton.addEventListener('click', function () {
     openPopup(popupEdit);
-    fillEditingForm(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText)
-
+    fillEditingForm(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText);
+     clearValidation(popupEdit.querySelector('.popup__form'),config);
 });
 
 function handleFormSubmitForEditing(newName, newJob) {
@@ -39,16 +51,23 @@ subscribeToEditingFormSubmitting( handleFormSubmitForEditing);
 // Форма создания
 const addButton = document.querySelector('.profile__add-button');
 addButton.addEventListener('click',  ()=>{
-    openPopup(popupAdding)
+    openPopup(popupAdding);
 });
 
 function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
     addCard(nameOfPlace, imgLink);
     closeCurrentPopup();
+    clearValidation(popupAdding.querySelector('.popup__form'),config);
 }
 
 subscribeToAddingFormSubmitting(handleFormSubmitForAddingCard);
 
+
+enableValidation(config);
+
+ const userInfo= getInfoAboutUser();
+
+getCards()
 
 
 
