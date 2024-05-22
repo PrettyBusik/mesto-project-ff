@@ -13,21 +13,45 @@ export const getInfoAboutUser= ()=>{
    })
         .then(res=>{
            return  res.json();
+
         })
         .then(user=>{
-            // console.log(user)
+            return user
         })
 }
 
 export  const getCards= ()=>{
     return fetch(`${config.baseUrl}/cards`, {
-        method:'GET',
+        method: 'GET',
         headers: config.headers
     })
-        .then(res=>{
+        .then(res => {
             return res.json();
         })
-        .then(cards=>{
-            console.log(cards)
+        .then(cards => {
+            return cards
         })
+}
+
+export const saveEditingInProfile = (nameOfUser, descriptionOfUser) => {
+    return fetch(`${config.baseUrl}/users/me`, {
+        method: 'PATCH',
+        headers: config.headers,
+        body: JSON.stringify({
+            name: nameOfUser,
+            about: descriptionOfUser
+        })
+    })
+}
+
+export const postNewCard=(nameOfPlace, linkOfPlace)=>{
+   return  fetch(`${config.baseUrl}/cards`, {
+        method: 'POST',
+        headers: config.headers,
+        body:JSON.stringify({
+            name:nameOfPlace,
+            link:linkOfPlace
+        })
+    })
+
 }

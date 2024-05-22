@@ -1,3 +1,16 @@
+.card__description{
+  position: relative;
+}
+
+.card__likes{
+  display: flex;
+  flex-direction: column;
+  margin-block: 5px;
+  position: absolute;
+  top: 17px;
+  right: 21px;
+}
+
 .card__like-button {
   width: 21px;
   height: 18px;
@@ -17,4 +30,8 @@
 
 .card__like-button:hover {
   opacity: 0.6;
+}
+
+.card__Likes-amount{
+text-align: center;
 }

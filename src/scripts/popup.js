@@ -24,8 +24,11 @@ export function showPopupCard(imageSrc, title,popupCard ){
 
 export  function closeCurrentPopup() {
     const currentPopup = document.querySelector('.popup_is-opened');
-    currentPopup.classList.remove('popup_is-opened');
-    document.removeEventListener('keydown', onEscapePress);
+    if (currentPopup){
+        currentPopup.classList.remove('popup_is-opened');
+        document.removeEventListener('keydown', onEscapePress);
+    }
+
 }
 
 function onEscapePress(event) {
