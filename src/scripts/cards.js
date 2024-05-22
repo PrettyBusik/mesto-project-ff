@@ -1,5 +1,4 @@
 import {showPopupCard} from "./popup";
-import {initialCards} from "./initialCards";
 
 const cardTemplate = document.querySelector('#card-template').content;
 const listOfCards = document.querySelector('.places__list');
@@ -11,16 +10,10 @@ const popupCard = document.querySelector('.popup_type_image');
  * @param {string} nameOfPlace
  * @param {string} link
  */
-export function addCard(nameOfPlace, link) {
-    const newCard = creatCardNode(nameOfPlace, link, handleDeletingButton, handleLike, handleCardClick);
-    listOfCards.prepend(newCard);
-}
+export function addCard(nameOfPlace, link, amountOfLikes, isMyCard) {
+    const newCard = creatCardNode(nameOfPlace, link, handleDeletingButton, handleLike, handleCardClick, amountOfLikes, isMyCard);
 
-function addInitialCards() {
-    initialCards.forEach(function (card) {
-        const newCard = creatCardNode(card.name, card.link, handleDeletingButton, handleLike, handleCardClick)
-        listOfCards.append(newCard);
-    })
+    listOfCards.prepend(newCard);
 }
 
 /**
@@ -29,14 +22,19 @@ function addInitialCards() {
  * @param {string} link
  * @return {Element}
  */
-function creatCardNode(nameOfPlace, link, removeCard, likeCard, clickCard) {
+function creatCardNode(nameOfPlace, link, removeCard, likeCard, clickCard, amountOfLikes, isMyCard) {
     const newCard = cardTemplate.querySelector('.card').cloneNode(true);
     const cardImg = newCard.querySelector('.card__image');
+    const amountOfLikesElement = newCard.querySelector('.card__Likes-amount');
     cardImg.src = link;
     cardImg.alt = nameOfPlace;
     newCard.querySelector('.card__title').textContent = nameOfPlace;
+   amountOfLikesElement.innerText= amountOfLikes===0? '': amountOfLikes;
 
     const deleteCardButton= newCard.querySelector('.card__delete-button');
+    if (!isMyCard){
+        deleteCardButton.style.display="none";
+    }
     deleteCardButton.addEventListener('click', removeCard);
 
     const likeCardButton= newCard.querySelector('.card__like-button');
@@ -74,7 +72,5 @@ function handleCardClick(event) {
 
     showPopupCard(imgSrc, titleOfCard, popupCard);
 }
-
-addInitialCards();
 
 

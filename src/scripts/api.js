@@ -53,5 +53,4 @@ export const postNewCard=(nameOfPlace, linkOfPlace)=>{
             link:linkOfPlace
         })
     })
-
 }

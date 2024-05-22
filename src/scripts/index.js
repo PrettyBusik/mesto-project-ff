@@ -8,11 +8,12 @@ import {getInfoAboutUser, getCards, saveEditingInProfile, postNewCard} from "./a
 const popupEdit= document.querySelector('.popup_type_edit');
 const popupAdding= document.querySelector('.popup_type_new-card');
 const popups = document.querySelectorAll('.popup');
-const amountOfLikesElement=document.querySelectorAll('.card__Likes-amount');
 
 
 const nameOfUserInPage = document.querySelector('.profile__title');
 const descriptionOfUserInPage = document.querySelector('.profile__description');
+
+let myId;
 
 const config= {
     formSelector: '.popup__form',
@@ -72,23 +73,20 @@ enableValidation(config);
      .then((user)=>{
          fillEditingForm(user.name, user.about);
          handleFormSubmitForEditing(user.name, user.about);
+         myId= user._id;
      })
 
  const allCards =getCards()
      .then((cards)=>{
-        cards.forEach((card)=>{
-            addCard(card.name, card.link);
-            amountOfLikesElement.forEach(element=>{
-                element.innerText= card.likes.length;
-                console.log(element.innerText)
-         // console.log(card.likes.length + 'likes')
-            })
+        cards.forEach((card)=> {
+            const isMyCard =  myId===card.owner._id;
+            addCard(card.name, card.link, card.likes.length, isMyCard);
         })
      })
 
 
 Promise.all([userInfo, allCards])
-    .then(results=>{
+    .then((cards)=>{
     })
 
 const updateProfile = saveEditingInProfile(nameOfUserInPage.innerText, descriptionOfUserInPage.innerHTML)
