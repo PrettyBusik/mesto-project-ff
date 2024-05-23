@@ -18,7 +18,7 @@ export const getInfoAboutUser= ()=>{
         .then(handelResult)
 }
 
-export  const getCards= ()=>{
+export  const getAllCards= ()=>{
     return fetch(`${config.baseUrl}/cards`, {
         method: 'GET',
         headers: config.headers

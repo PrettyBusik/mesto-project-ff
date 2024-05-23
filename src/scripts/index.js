@@ -3,7 +3,7 @@ import {showPopupCard, closeCurrentPopup, openPopup} from "./popup";
 import {fillEditingForm, subscribeToEditingFormSubmitting, subscribeToAddingFormSubmitting} from "./forms";
 import {addCard} from "./cards";
 import {enableValidation, clearValidation} from "./validation";
-import {getInfoAboutUser, getCards, saveEditingInProfile, postNewCard} from "./api";
+import {getInfoAboutUser, getAllCards, saveEditingInProfile, postNewCard} from "./api";
 
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdding = document.querySelector('.popup_type_new-card');
@@ -70,17 +70,14 @@ subscribeToAddingFormSubmitting(handleFormSubmitForAddingCard);
 
 enableValidation(config);
 
-const userInfo = getInfoAboutUser()
-    .then((user) => {
+
+Promise.all([getInfoAboutUser(), getAllCards()])
+    .then(([user, allCards]) => {
         fillEditingForm(user.name, user.about);
         handleFormSubmitForEditing(user.name, user.about);
         myId = user._id;
-    })
 
-const getAllCards = getCards()
-    .then((cards) => {
-        console.log("My ID  "+myId)
-        cards.forEach((card) => {
+        allCards.forEach((card) => {
             // const isMyCard = myId === card.owner._id;
             let isMyCard= false;
             let idCard = '';
@@ -92,11 +89,7 @@ const getAllCards = getCards()
             addCard(card.name, card.link, card.likes.length, isMyCard, idCard);
 
         })
-    })
 
-
-Promise.all([userInfo, getAllCards])
-    .then(([user, allCards]) => {
     })
 
 const updateProfile = saveEditingInProfile(nameOfUserInPage.innerText, descriptionOfUserInPage.innerHTML)
