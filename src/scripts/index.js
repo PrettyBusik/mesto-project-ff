@@ -78,16 +78,11 @@ Promise.all([getInfoAboutUser(), getAllCards()])
         myId = user._id;
 
         allCards.forEach((card) => {
-            // const isMyCard = myId === card.owner._id;
             let isMyCard= false;
-            let idCard = '';
             if (myId === card.owner._id){
                 isMyCard= true;
-                idCard = card._id;
-                console.log( "передает  "+idCard)
             }
-            addCard(card.name, card.link, card.likes.length, isMyCard, idCard);
-
+            addCard(card, isMyCard);
         })
 
     })
