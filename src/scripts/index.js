@@ -1,12 +1,12 @@
 import './../pages/index.css';
 import {showPopupCard, closeCurrentPopup, openPopup} from "./popup";
-import {fillEditingForm,subscribeToEditingFormSubmitting, subscribeToAddingFormSubmitting} from "./forms";
+import {fillEditingForm, subscribeToEditingFormSubmitting, subscribeToAddingFormSubmitting} from "./forms";
 import {addCard} from "./cards";
 import {enableValidation, clearValidation} from "./validation";
 import {getInfoAboutUser, getCards, saveEditingInProfile, postNewCard} from "./api";
 
-const popupEdit= document.querySelector('.popup_type_edit');
-const popupAdding= document.querySelector('.popup_type_new-card');
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupAdding = document.querySelector('.popup_type_new-card');
 const popups = document.querySelectorAll('.popup');
 
 
@@ -15,7 +15,8 @@ const descriptionOfUserInPage = document.querySelector('.profile__description');
 
 let myId;
 
-const config= {
+
+const config = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button',
@@ -36,8 +37,8 @@ popups.forEach(function (popup) {
 const editButton = document.querySelector('.profile__edit-button');
 editButton.addEventListener('click', function () {
     openPopup(popupEdit);
-     fillEditingForm(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText);
-     clearValidation(popupEdit.querySelector('.popup__form'),config);
+    fillEditingForm(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText);
+    clearValidation(popupEdit.querySelector('.popup__form'), config);
 
 });
 
@@ -48,20 +49,20 @@ function handleFormSubmitForEditing(newName, newJob) {
     closeCurrentPopup();
 }
 
-subscribeToEditingFormSubmitting( handleFormSubmitForEditing);
+subscribeToEditingFormSubmitting(handleFormSubmitForEditing);
 
 
 // Форма создания
 const addButton = document.querySelector('.profile__add-button');
-addButton.addEventListener('click',  ()=>{
+addButton.addEventListener('click', () => {
     openPopup(popupAdding);
 });
 
 function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
     addCard(nameOfPlace, imgLink);
-    postNewCard(nameOfPlace, imgLink).then(res=> console.log(res.status));
+    postNewCard(nameOfPlace, imgLink).then(res => console.log(res.status));
     closeCurrentPopup();
-    clearValidation(popupAdding.querySelector('.popup__form'),config);
+    clearValidation(popupAdding.querySelector('.popup__form'), config);
 }
 
 subscribeToAddingFormSubmitting(handleFormSubmitForAddingCard);
@@ -69,29 +70,40 @@ subscribeToAddingFormSubmitting(handleFormSubmitForAddingCard);
 
 enableValidation(config);
 
- const userInfo= getInfoAboutUser()
-     .then((user)=>{
-         fillEditingForm(user.name, user.about);
-         handleFormSubmitForEditing(user.name, user.about);
-         myId= user._id;
-     })
+const userInfo = getInfoAboutUser()
+    .then((user) => {
+        fillEditingForm(user.name, user.about);
+        handleFormSubmitForEditing(user.name, user.about);
+        myId = user._id;
+    })
 
- const allCards =getCards()
-     .then((cards)=>{
-        cards.forEach((card)=> {
-            const isMyCard =  myId===card.owner._id;
-            addCard(card.name, card.link, card.likes.length, isMyCard);
+const getAllCards = getCards()
+    .then((cards) => {
+        console.log("My ID  "+myId)
+        cards.forEach((card) => {
+            // const isMyCard = myId === card.owner._id;
+            let isMyCard= false;
+            let idCard = '';
+            if (myId === card.owner._id){
+                isMyCard= true;
+                idCard = card._id;
+                console.log( "передает  "+idCard)
+            }
+            addCard(card.name, card.link, card.likes.length, isMyCard, idCard);
+
         })
-     })
+    })
 
 
-Promise.all([userInfo, allCards])
-    .then((cards)=>{
+Promise.all([userInfo, getAllCards])
+    .then(([user, allCards]) => {
     })
 
 const updateProfile = saveEditingInProfile(nameOfUserInPage.innerText, descriptionOfUserInPage.innerHTML)
-    .then(res=>{
+    .then(res => {
     })
+
+
 
 
 

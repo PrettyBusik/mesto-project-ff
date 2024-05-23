@@ -1,4 +1,5 @@
 import {showPopupCard} from "./popup";
+import {deleteCardFromServer} from "./api";
 
 const cardTemplate = document.querySelector('#card-template').content;
 const listOfCards = document.querySelector('.places__list');
@@ -10,9 +11,9 @@ const popupCard = document.querySelector('.popup_type_image');
  * @param {string} nameOfPlace
  * @param {string} link
  */
-export function addCard(nameOfPlace, link, amountOfLikes, isMyCard) {
-    const newCard = creatCardNode(nameOfPlace, link, handleDeletingButton, handleLike, handleCardClick, amountOfLikes, isMyCard);
-
+export function addCard(nameOfPlace, link, amountOfLikes, isMyCard, idCard) {
+    const newCard = creatCardNode(nameOfPlace, link, handleDeletingButton, handleLike, handleCardClick, amountOfLikes, isMyCard, idCard);
+    console.log("addcard id ="+ idCard)
     listOfCards.prepend(newCard);
 }
 
@@ -22,7 +23,7 @@ export function addCard(nameOfPlace, link, amountOfLikes, isMyCard) {
  * @param {string} link
  * @return {Element}
  */
-function creatCardNode(nameOfPlace, link, removeCard, likeCard, clickCard, amountOfLikes, isMyCard) {
+function creatCardNode(nameOfPlace, link, removeCard, likeCard, clickCard, amountOfLikes, isMyCard, idCard) {
     const newCard = cardTemplate.querySelector('.card').cloneNode(true);
     const cardImg = newCard.querySelector('.card__image');
     const amountOfLikesElement = newCard.querySelector('.card__Likes-amount');
@@ -30,12 +31,14 @@ function creatCardNode(nameOfPlace, link, removeCard, likeCard, clickCard, amoun
     cardImg.alt = nameOfPlace;
     newCard.querySelector('.card__title').textContent = nameOfPlace;
    amountOfLikesElement.innerText= amountOfLikes===0? '': amountOfLikes;
-
+    idCard!==""?console.log("createCard "+ idCard): console.log('');
     const deleteCardButton= newCard.querySelector('.card__delete-button');
+
     if (!isMyCard){
         deleteCardButton.style.display="none";
+    }else {
+        deleteCardButton.addEventListener('click',(event)=> removeCard(event,idCard));
     }
-    deleteCardButton.addEventListener('click', removeCard);
 
     const likeCardButton= newCard.querySelector('.card__like-button');
     likeCardButton.addEventListener('click', likeCard);
@@ -46,10 +49,19 @@ function creatCardNode(nameOfPlace, link, removeCard, likeCard, clickCard, amoun
     return newCard;
 }
 
-function handleDeletingButton(event) {
-    event.stopPropagation();
-    const cardForRemoving = event.target.closest('.card');
-    cardForRemoving.remove();
+function handleDeletingButton(event, idCard) {
+   console.log("принимает"+ idCard)
+    deleteCardFromServer(idCard).then(result=>{
+        if (result.ok){
+            event.target.closest('.card').remove();
+        }
+    console.log(result.status)
+        console.log(1)
+});
+    // event.stopPropagation();
+    // const cardForRemoving = event.target.closest('.card');
+
+    // cardForRemoving.remove();
 }
 
 function handleLike(event) {

@@ -6,18 +6,16 @@ const config = {
     }
 }
 
+const handelResult= (res) => {
+    return res.json();
+}
+
 export const getInfoAboutUser= ()=>{
    return  fetch(`${config.baseUrl}/users/me`, {
        method:'GET',
        headers: config.headers
    })
-        .then(res=>{
-           return  res.json();
-
-        })
-        .then(user=>{
-            return user
-        })
+        .then(handelResult)
 }
 
 export  const getCards= ()=>{
@@ -25,12 +23,7 @@ export  const getCards= ()=>{
         method: 'GET',
         headers: config.headers
     })
-        .then(res => {
-            return res.json();
-        })
-        .then(cards => {
-            return cards
-        })
+        .then(handelResult)
 }
 
 export const saveEditingInProfile = (nameOfUser, descriptionOfUser) => {
@@ -52,5 +45,12 @@ export const postNewCard=(nameOfPlace, linkOfPlace)=>{
             name:nameOfPlace,
             link:linkOfPlace
         })
+    })
+}
+
+export const deleteCardFromServer= (idCard)=>{
+    return fetch(`${config.baseUrl}/cards/${idCard}`,{
+        method:"DELETE",
+        headers:config.headers
     })
 }
