@@ -1,5 +1,5 @@
 import {showPopupCard} from "./popup";
-import {deleteCardFromServer} from "./api";
+import {deleteCardFromServer, setLike, deleteLike} from "./api";
 
 const cardTemplate = document.querySelector('#card-template').content;
 const listOfCards = document.querySelector('.places__list');
@@ -42,7 +42,7 @@ function creatCardNode(card, removeCard, likeCard, clickCard, isMyCard) {
     }
 
     const likeCardButton= newCard.querySelector('.card__like-button');
-    likeCardButton.addEventListener('click', likeCard);
+    likeCardButton.addEventListener('click', (ev)=>likeCard(ev, card._id));
 
     newCard.addEventListener('click',clickCard )
 
@@ -57,10 +57,23 @@ function handleDeletingButton(event, idCard) {
 });
 }
 
-function handleLike(event) {
+function handleLike(event, idCard) {
     event.stopPropagation();
     const likeButton = event.target;
-    likeButton.classList.toggle('card__like-button_is-active');
+    const cardLikesAmountElement = event.target.closest('.card__likes').querySelector('.card__Likes-amount')
+    if (!likeButton.classList.contains('card__like-button_is-active')){
+        likeButton.classList.add('card__like-button_is-active')
+        setLike(idCard)
+            .then(card=>{
+                cardLikesAmountElement.innerText= card.likes.length;
+            })
+    }else {
+        likeButton.classList.remove('card__like-button_is-active')
+        deleteLike(idCard)
+            .then(card =>{
+                cardLikesAmountElement.innerText= card.likes.length;
+            })
+    }
 }
 
 function handleCardClick(event) {

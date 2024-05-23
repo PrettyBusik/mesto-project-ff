@@ -51,3 +51,20 @@ export const deleteCardFromServer= (idCard)=>{
         headers:config.headers
     })
 }
+
+export const setLike= (idCard)=>{
+    return fetch(`${config.baseUrl}/cards/likes/${idCard}`,{
+        method:"PUT",
+        headers:config.headers
+    })
+        .then(handelResult)
+}
+
+export const deleteLike= (idCard)=>{
+    return fetch(`${config.baseUrl}/cards/likes/${idCard}`,{
+        method:"DELETE",
+        headers:config.headers
+    })
+        .then(handelResult)
+}
+
