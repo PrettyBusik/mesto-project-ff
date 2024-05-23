@@ -59,8 +59,11 @@ addButton.addEventListener('click', () => {
 });
 
 function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
-    addCard(nameOfPlace, imgLink);
-    postNewCard(nameOfPlace, imgLink).then(res => console.log(res.status));
+    const newCard = {name:nameOfPlace,
+    link:imgLink,
+    likes:[]}
+    addCard(newCard, true);
+    postNewCard(newCard);
     closeCurrentPopup();
     clearValidation(popupAdding.querySelector('.popup__form'), config);
 }

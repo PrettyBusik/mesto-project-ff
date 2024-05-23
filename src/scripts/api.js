@@ -37,14 +37,11 @@ export const saveEditingInProfile = (nameOfUser, descriptionOfUser) => {
     })
 }
 
-export const postNewCard=(nameOfPlace, linkOfPlace)=>{
+export const postNewCard=(card)=>{
    return  fetch(`${config.baseUrl}/cards`, {
         method: 'POST',
         headers: config.headers,
-        body:JSON.stringify({
-            name:nameOfPlace,
-            link:linkOfPlace
-        })
+        body:JSON.stringify(card)
     })
 }
 

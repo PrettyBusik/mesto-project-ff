@@ -32,9 +32,9 @@ function creatCardNode(card, removeCard, likeCard, clickCard, isMyCard) {
     cardImg.src = card.link;
     cardImg.alt = card.name;
     newCard.querySelector('.card__title').textContent = card.name;
-   amountOfLikesElement.innerText= card.likes.length===0? '':  card.likes.length;
-    const deleteCardButton= newCard.querySelector('.card__delete-button');
+  amountOfLikesElement.innerText= card.likes.length===0? '':  card.likes.length;
 
+    const deleteCardButton= newCard.querySelector('.card__delete-button');
     if (!isMyCard){
         deleteCardButton.style.display="none";
     }else {
@@ -43,7 +43,6 @@ function creatCardNode(card, removeCard, likeCard, clickCard, isMyCard) {
 
     const likeCardButton= newCard.querySelector('.card__like-button');
     likeCardButton.addEventListener('click', likeCard);
-
 
     newCard.addEventListener('click',clickCard )
 
