@@ -8,6 +8,7 @@
   background-size: cover;
   background-position: center;
   margin: 0 29px 0 0;
+  position: relative;
 }
 
 @media screen and (max-width: 740px) {
@@ -20,4 +21,18 @@
   .profile__image {
     margin-right: 0;
   }
+}
+
+.profile__image:hover{
+  opacity: 0.3;
+}
+
+.profile__image-icon{
+  width: 10px;
+  height:10px;
+position: absolute;
+  top: 60px;
+  left: 60px;
+  z-index: 1;
+  cursor: pointer;
 }

@@ -1,12 +1,13 @@
 import './../pages/index.css';
-import {showPopupCard, closeCurrentPopup, openPopup} from "./popup";
-import {fillEditingForm, subscribeToEditingFormSubmitting, subscribeToAddingFormSubmitting} from "./forms";
+import {closeCurrentPopup, openPopup} from "./popup";
+import {fillEditingForm, subscribeToAddingFormSubmitting, subscribeToEditingFormSubmitting} from "./forms";
 import {addCard} from "./cards";
-import {enableValidation, clearValidation} from "./validation";
-import {getInfoAboutUser, getAllCards, saveEditingInProfile, postNewCard} from "./api";
+import {clearValidation, enableValidation} from "./validation";
+import {getAllCards, getInfoAboutUser, postNewCard, saveEditingInProfile} from "./api";
 
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdding = document.querySelector('.popup_type_new-card');
+const popupAvatar= document.querySelector('.popup_type_avatar');
 const popups = document.querySelectorAll('.popup');
 
 
@@ -31,6 +32,12 @@ popups.forEach(function (popup) {
             closeCurrentPopup();
         }
     })
+})
+
+
+const avatarNode= document.querySelector('.profile__image');
+avatarNode.addEventListener('click', ()=>{
+   openPopup(popupAvatar)
 })
 
 //Форма редактирования
@@ -79,22 +86,20 @@ Promise.all([getInfoAboutUser(), getAllCards()])
         fillEditingForm(user.name, user.about);
         handleFormSubmitForEditing(user.name, user.about);
         myId = user._id;
-        let isMyCard= false;
-        let isLiked=false;
+
 
         allCards.forEach((card) => {
-            if (myId === card.owner._id){
-                isMyCard= true;
+            let isMyCard = false;
+            let isLiked = false;
+            if (myId === card.owner._id) {
+                isMyCard = true;
             }
 
-            card.likes.forEach(like=>{
-                if (myId===like._id){
-                    console.log(card)
-                    console.log(like)
-                    console.log(like._id)
-                    isLiked= true;
+            card.likes.forEach(like => {
+                if (myId === like._id) {
+                    isLiked = true;
                 }
-          })
+            })
 
             addCard(card, isMyCard, isLiked);
         })
@@ -104,7 +109,5 @@ Promise.all([getInfoAboutUser(), getAllCards()])
 const updateProfile = saveEditingInProfile(nameOfUserInPage.innerText, descriptionOfUserInPage.innerHTML)
     .then(res => {
     })
-
-
 
 

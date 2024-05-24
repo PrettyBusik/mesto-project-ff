@@ -68,3 +68,12 @@ export const deleteLike= (idCard)=>{
         .then(handelResult)
 }
 
+export const changeAvatar = (avatarLink)=>{
+    return fetch(`${config.baseUrl}/users/me/${avatarLink}`, {
+        method: "PATCH",
+        headers: config.headers,
+        body: JSON.stringify(avatarLink)
+    })
+        .then(handelResult);
+
+}
