@@ -10,9 +10,12 @@ const popupCard = document.querySelector('.popup_type_image');
  *
  * @param {object} card
  * @param {boolean} isMyCard
+ * @param {boolean} isLiked
  */
-export function addCard(card, isMyCard) {
-    const newCard = creatCardNode(card, handleDeletingButton, handleLike, handleCardClick, isMyCard);
+export function addCard(card, isMyCard,isLiked) {
+    // console.log(isLiked)
+    // console.log(card)
+    const newCard = creatCardNode(card, handleDeletingButton, handleLike, showLike, handleCardClick, isMyCard,isLiked);
     listOfCards.prepend(newCard);
 }
 
@@ -21,11 +24,13 @@ export function addCard(card, isMyCard) {
  * @param {object} card
  * @param {function} removeCard
  * @param {function} likeCard
+ * @param {function} showLike
  * @param {function} clickCard
  * @param {boolean} isMyCard
+ * @param {boolean} isLiked
  * @return {Element}
  */
-function creatCardNode(card, removeCard, likeCard, clickCard, isMyCard) {
+function creatCardNode(card, removeCard, likeCard,showLike, clickCard, isMyCard,isLiked) {
     const newCard = cardTemplate.querySelector('.card').cloneNode(true);
     const cardImg = newCard.querySelector('.card__image');
     const amountOfLikesElement = newCard.querySelector('.card__Likes-amount');
@@ -43,6 +48,7 @@ function creatCardNode(card, removeCard, likeCard, clickCard, isMyCard) {
 
     const likeCardButton= newCard.querySelector('.card__like-button');
     likeCardButton.addEventListener('click', (ev)=>likeCard(ev, card._id));
+    showLike(newCard, isLiked);
 
     newCard.addEventListener('click',clickCard )
 
@@ -62,17 +68,28 @@ function handleLike(event, idCard) {
     const likeButton = event.target;
     const cardLikesAmountElement = event.target.closest('.card__likes').querySelector('.card__Likes-amount')
     if (!likeButton.classList.contains('card__like-button_is-active')){
-        likeButton.classList.add('card__like-button_is-active')
         setLike(idCard)
             .then(card=>{
+                likeButton.classList.add('card__like-button_is-active')
                 cardLikesAmountElement.innerText= card.likes.length;
+                console.log(card.likes)
             })
     }else {
-        likeButton.classList.remove('card__like-button_is-active')
         deleteLike(idCard)
             .then(card =>{
+                likeButton.classList.remove('card__like-button_is-active');
                 cardLikesAmountElement.innerText= card.likes.length;
+                console.log(card.likes)
             })
+    }
+}
+
+function showLike(card, isLiked){
+    const likeCardButton= card.querySelector('.card__like-button');
+    if (isLiked){
+        likeCardButton.classList.add('card__like-button_is-active');
+    }else {
+        likeCardButton.classList.remove('card__like-button_is-active');
     }
 }
 

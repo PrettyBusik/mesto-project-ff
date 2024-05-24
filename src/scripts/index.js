@@ -79,13 +79,24 @@ Promise.all([getInfoAboutUser(), getAllCards()])
         fillEditingForm(user.name, user.about);
         handleFormSubmitForEditing(user.name, user.about);
         myId = user._id;
+        let isMyCard= false;
+        let isLiked=false;
 
         allCards.forEach((card) => {
-            let isMyCard= false;
             if (myId === card.owner._id){
                 isMyCard= true;
             }
-            addCard(card, isMyCard);
+
+            card.likes.forEach(like=>{
+                if (myId===like._id){
+                    console.log(card)
+                    console.log(like)
+                    console.log(like._id)
+                    isLiked= true;
+                }
+          })
+
+            addCard(card, isMyCard, isLiked);
         })
 
     })
@@ -93,10 +104,6 @@ Promise.all([getInfoAboutUser(), getAllCards()])
 const updateProfile = saveEditingInProfile(nameOfUserInPage.innerText, descriptionOfUserInPage.innerHTML)
     .then(res => {
     })
-
-
-
-
 
 
 
