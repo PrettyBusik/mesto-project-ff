@@ -1,5 +1,6 @@
 const editingForm = document.forms['edit-profile'];
 const addingForm = document.forms['new-place'];
+const newAvatarForm = document.forms['avatar-form']
 const nameInputInEditingForm = editingForm.elements.name;
 const descriptionInputInEditingForm = editingForm.elements.description;
 
@@ -40,6 +41,14 @@ export function subscribeToAddingFormSubmitting(callback) {
         const newLinkValue = addingForm.elements.link.value;
         callback(newCityValue, newLinkValue);
         addingForm.reset();
+    })
+}
+
+export function subscribeToNewAvatarFormSubmitting(callback){
+    newAvatarForm.addEventListener('submit', function (event){
+        event.preventDefault();
+        const  newAvatarLink = newAvatarForm.elements.avatar.value;
+        callback(newAvatarLink);
     })
 }
 

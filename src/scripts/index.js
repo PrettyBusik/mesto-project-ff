@@ -1,13 +1,18 @@
 import './../pages/index.css';
 import {closeCurrentPopup, openPopup} from "./popup";
-import {fillEditingForm, subscribeToAddingFormSubmitting, subscribeToEditingFormSubmitting} from "./forms";
+import {
+    fillEditingForm,
+    subscribeToAddingFormSubmitting,
+    subscribeToEditingFormSubmitting,
+    subscribeToNewAvatarFormSubmitting
+} from "./forms";
 import {addCard} from "./cards";
 import {clearValidation, enableValidation} from "./validation";
-import {getAllCards, getInfoAboutUser, postNewCard, saveEditingInProfile} from "./api";
+import {getAllCards, getInfoAboutUser, postNewCard, saveEditingInProfile, changeAvatar} from "./api";
 
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdding = document.querySelector('.popup_type_new-card');
-const popupAvatar= document.querySelector('.popup_type_avatar');
+const popupAvatar = document.querySelector('.popup_type_avatar');
 const popups = document.querySelectorAll('.popup');
 
 
@@ -35,10 +40,20 @@ popups.forEach(function (popup) {
 })
 
 
-const avatarNode= document.querySelector('.profile__image');
-avatarNode.addEventListener('click', ()=>{
-   openPopup(popupAvatar)
+const avatarNode = document.querySelector('.profile__image');
+avatarNode.addEventListener('click', () => {
+    openPopup(popupAvatar);
 })
+
+function handleSubmitFormForNewAvatar(newAvatarLink) {
+    changeAvatar(newAvatarLink)
+        .then(res => {
+            closeCurrentPopup();
+            avatarNode.style.backgroundImage = `url(${res.avatar})`;
+        })
+}
+
+subscribeToNewAvatarFormSubmitting(handleSubmitFormForNewAvatar);
 
 //Форма редактирования
 const editButton = document.querySelector('.profile__edit-button');
@@ -66,9 +81,11 @@ addButton.addEventListener('click', () => {
 });
 
 function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
-    const newCard = {name:nameOfPlace,
-    link:imgLink,
-    likes:[]}
+    const newCard = {
+        name: nameOfPlace,
+        link: imgLink,
+        likes: []
+    }
     addCard(newCard, true);
     postNewCard(newCard);
     closeCurrentPopup();
