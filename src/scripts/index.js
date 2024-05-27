@@ -19,8 +19,6 @@ const popups = document.querySelectorAll('.popup');
 const nameOfUserInPage = document.querySelector('.profile__title');
 const descriptionOfUserInPage = document.querySelector('.profile__description');
 
-let myId;
-
 
 const config = {
     formSelector: '.popup__form',
@@ -65,9 +63,12 @@ editButton.addEventListener('click', function () {
 });
 
 function handleFormSubmitForEditing(newName, newJob) {
-    nameOfUserInPage.textContent = newName;
-    descriptionOfUserInPage.textContent = newJob;
-    updateProfile;
+    fillEditingForm(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText)
+    saveEditingInProfile(newName, newJob)
+        .then(userInfo =>{
+            nameOfUserInPage.textContent = userInfo.name;
+           descriptionOfUserInPage.textContent = userInfo.about;
+        })
     closeCurrentPopup();
 }
 
@@ -86,7 +87,7 @@ function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
         link: imgLink,
         likes: []
     }
-    addCard(newCard, true);
+    addCard(newCard, true, false);
     postNewCard(newCard);
     closeCurrentPopup();
     clearValidation(popupAdding.querySelector('.popup__form'), config);
@@ -97,13 +98,14 @@ subscribeToAddingFormSubmitting(handleFormSubmitForAddingCard);
 
 enableValidation(config);
 
-
+let myId;
 Promise.all([getInfoAboutUser(), getAllCards()])
     .then(([user, allCards]) => {
-        fillEditingForm(user.name, user.about);
-        handleFormSubmitForEditing(user.name, user.about);
-        myId = user._id;
+        avatarNode.style.backgroundImage = `url(${user.avatar})`
+        nameOfUserInPage.innerText = user.name;
+        descriptionOfUserInPage.innerText = user.about;
 
+        myId = user._id;
 
         allCards.forEach((card) => {
             let isMyCard = false;
@@ -122,9 +124,4 @@ Promise.all([getInfoAboutUser(), getAllCards()])
         })
 
     })
-
-const updateProfile = saveEditingInProfile(nameOfUserInPage.innerText, descriptionOfUserInPage.innerHTML)
-    .then(res => {
-    })
-
 

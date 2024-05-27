@@ -35,6 +35,7 @@ export const saveEditingInProfile = (nameOfUser, descriptionOfUser) => {
             about: descriptionOfUser
         })
     })
+        .then(handelResult)
 }
 
 export const postNewCard=(card)=>{
