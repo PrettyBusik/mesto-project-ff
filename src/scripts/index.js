@@ -118,8 +118,8 @@ function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
             saveButtonInForm.textContent = originTextInSaveButtons;
         });
 
-    closeCurrentPopup();
     clearValidation(popupAdding.querySelector('.popup__form'), config);
+    closeCurrentPopup();
 }
 
 subscribeToAddingFormSubmitting(handleFormSubmitForAddingCard);

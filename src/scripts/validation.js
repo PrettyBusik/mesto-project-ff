@@ -1,18 +1,3 @@
-const showInputError = (formElement, inputElement, errorMessage, config) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
-    inputElement.classList.add(config.inputErrorClass);
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add(config.errorClass);
-
-};
-
-const hideInputError = (formElement, inputElement, config) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(config.inputErrorClass);
-    errorElement.classList.remove(config.errorClass);
-    errorElement.textContent = "";
-};
-
 const isValid = (formElement, inputElement, config) => {
     if (inputElement.validity.patternMismatch) {
         inputElement.setCustomValidity(inputElement.getAttribute('data-error-message'));
@@ -28,6 +13,23 @@ const isValid = (formElement, inputElement, config) => {
         hideInputError(formElement, inputElement, config);
     }
 };
+
+const showInputError = (formElement, inputElement, errorMessage, config) => {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
+    inputElement.classList.add(config.inputErrorClass);
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add(config.errorClass);
+
+};
+
+const hideInputError = (formElement, inputElement, config) => {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove(config.inputErrorClass);
+    errorElement.classList.remove(config.errorClass);
+    errorElement.textContent = "";
+};
+
+
 
 const setEventListener = (formElement, config) => {
     const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
@@ -77,7 +79,6 @@ export const clearValidation = (formElement, config) => {
     inputList.forEach((inputElement) => {
         hideInputError(formElement, inputElement, config);
     })
-    console.log()
     setButtonStateAccordingToValidationResult(inputList, submitButton, config)
 }
 
