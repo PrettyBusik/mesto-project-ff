@@ -6,19 +6,19 @@ const config = {
     }
 }
 
-const handelResult= (res) => {
+const handelResult = (res) => {
     return res.json();
 }
 
-export const getInfoAboutUser= ()=>{
-   return  fetch(`${config.baseUrl}/users/me`, {
-       method:'GET',
-       headers: config.headers
-   })
+export const getInfoAboutUser = () => {
+    return fetch(`${config.baseUrl}/users/me`, {
+        method: 'GET',
+        headers: config.headers
+    })
         .then(handelResult)
 }
 
-export  const getAllCards= ()=>{
+export const getAllCards = () => {
     return fetch(`${config.baseUrl}/cards`, {
         method: 'GET',
         headers: config.headers
@@ -38,42 +38,42 @@ export const saveEditingInProfile = (nameOfUser, descriptionOfUser) => {
         .then(handelResult)
 }
 
-export const postNewCard=(card)=>{
-   return  fetch(`${config.baseUrl}/cards`, {
+export const postNewCard = (card) => {
+    return fetch(`${config.baseUrl}/cards`, {
         method: 'POST',
         headers: config.headers,
-        body:JSON.stringify(card)
+        body: JSON.stringify(card)
     })
 }
 
-export const deleteCardFromServer= (idCard)=>{
-    return fetch(`${config.baseUrl}/cards/${idCard}`,{
-        method:"DELETE",
-        headers:config.headers
+export const deleteCardFromServer = (idCard) => {
+    return fetch(`${config.baseUrl}/cards/${idCard}`, {
+        method: "DELETE",
+        headers: config.headers
     })
 }
 
-export const setLike= (idCard)=>{
-    return fetch(`${config.baseUrl}/cards/likes/${idCard}`,{
-        method:"PUT",
-        headers:config.headers
-    })
-        .then(handelResult)
-}
-
-export const deleteLike= (idCard)=>{
-    return fetch(`${config.baseUrl}/cards/likes/${idCard}`,{
-        method:"DELETE",
-        headers:config.headers
+export const setLike = (idCard) => {
+    return fetch(`${config.baseUrl}/cards/likes/${idCard}`, {
+        method: "PUT",
+        headers: config.headers
     })
         .then(handelResult)
 }
 
-export const changeAvatar = (avatarLink)=>{
+export const deleteLike = (idCard) => {
+    return fetch(`${config.baseUrl}/cards/likes/${idCard}`, {
+        method: "DELETE",
+        headers: config.headers
+    })
+        .then(handelResult)
+}
+
+export const changeAvatar = (avatarLink) => {
     return fetch(`${config.baseUrl}/users/me/avatar`, {
         method: "PATCH",
         headers: config.headers,
-        body: JSON.stringify({avatar:avatarLink})
+        body: JSON.stringify({avatar: avatarLink})
     })
         .then(handelResult);
 

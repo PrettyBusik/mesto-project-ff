@@ -26,6 +26,7 @@ export function subscribeToEditingFormSubmitting(callback) {
         event.preventDefault();
         const newName = editingForm.elements.name.value;
         const newJob = editingForm.elements.description.value;
+        showAnotherSaveButtonDuringLoading(editingForm);
         callback(newName, newJob);
     })
 }
@@ -39,6 +40,7 @@ export function subscribeToAddingFormSubmitting(callback) {
         event.preventDefault();
         const newCityValue = addingForm.elements['place-name'].value;
         const newLinkValue = addingForm.elements.link.value;
+        showAnotherSaveButtonDuringLoading(addingForm)
         callback(newCityValue, newLinkValue);
         addingForm.reset();
     })
@@ -48,9 +50,14 @@ export function subscribeToNewAvatarFormSubmitting(callback){
     newAvatarForm.addEventListener('submit', function (event){
         event.preventDefault();
         const  newAvatarLink = newAvatarForm.elements.avatar.value;
+        showAnotherSaveButtonDuringLoading(newAvatarForm);
         callback(newAvatarLink);
     })
 }
 
-
+function showAnotherSaveButtonDuringLoading(form){
+    const saveButtonInForm= form.querySelector('.popup__button');
+    saveButtonInForm.textContent = "Сохранение..."
+    console.log(saveButtonInForm.textContent)
+}
 

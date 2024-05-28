@@ -20,6 +20,9 @@ const nameOfUserInPage = document.querySelector('.profile__title');
 const descriptionOfUserInPage = document.querySelector('.profile__description');
 
 
+const originTextInSaveButtons = 'Сохранить';
+
+
 const config = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
@@ -44,10 +47,14 @@ avatarNode.addEventListener('click', () => {
 })
 
 function handleSubmitFormForNewAvatar(newAvatarLink) {
+    const saveButtonInForm = popupAvatar.querySelector(config.submitButtonSelector);
     changeAvatar(newAvatarLink)
         .then(res => {
             closeCurrentPopup();
             avatarNode.style.backgroundImage = `url(${res.avatar})`;
+        })
+        .finally(() => {
+            saveButtonInForm.textContent = originTextInSaveButtons;
         })
 }
 
@@ -56,18 +63,23 @@ subscribeToNewAvatarFormSubmitting(handleSubmitFormForNewAvatar);
 //Форма редактирования
 const editButton = document.querySelector('.profile__edit-button');
 editButton.addEventListener('click', function () {
+
     openPopup(popupEdit);
     fillEditingForm(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText);
     clearValidation(popupEdit.querySelector('.popup__form'), config);
-
 });
 
 function handleFormSubmitForEditing(newName, newJob) {
-    fillEditingForm(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText)
+    const saveButtonInForm = popupEdit.querySelector(config.submitButtonSelector);
+    fillEditingForm(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText);
+
     saveEditingInProfile(newName, newJob)
-        .then(userInfo =>{
+        .then(userInfo => {
             nameOfUserInPage.textContent = userInfo.name;
-           descriptionOfUserInPage.textContent = userInfo.about;
+            descriptionOfUserInPage.textContent = userInfo.about;
+        })
+        .finally(() => {
+            saveButtonInForm.textContent = originTextInSaveButtons;
         })
     closeCurrentPopup();
 }
@@ -82,13 +94,19 @@ addButton.addEventListener('click', () => {
 });
 
 function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
+    const saveButtonInForm = popupAdding.querySelector(config.submitButtonSelector);
     const newCard = {
         name: nameOfPlace,
         link: imgLink,
         likes: []
     }
     addCard(newCard, true, false);
-    postNewCard(newCard);
+
+    postNewCard(newCard)
+        .finally(() => {
+            saveButtonInForm.textContent = originTextInSaveButtons;
+        });
+
     closeCurrentPopup();
     clearValidation(popupAdding.querySelector('.popup__form'), config);
 }
