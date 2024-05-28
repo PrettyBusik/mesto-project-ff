@@ -46,18 +46,17 @@ export function subscribeToAddingFormSubmitting(callback) {
     })
 }
 
-export function subscribeToNewAvatarFormSubmitting(callback){
-    newAvatarForm.addEventListener('submit', function (event){
+export function subscribeToNewAvatarFormSubmitting(callback) {
+    newAvatarForm.addEventListener('submit', function (event) {
         event.preventDefault();
-        const  newAvatarLink = newAvatarForm.elements.avatar.value;
+        const newAvatarLink = newAvatarForm.elements.avatar.value;
         showAnotherSaveButtonDuringLoading(newAvatarForm);
         callback(newAvatarLink);
     })
 }
 
-function showAnotherSaveButtonDuringLoading(form){
-    const saveButtonInForm= form.querySelector('.popup__button');
+function showAnotherSaveButtonDuringLoading(form) {
+    const saveButtonInForm = form.querySelector('.popup__button');
     saveButtonInForm.textContent = "Сохранение..."
-    console.log(saveButtonInForm.textContent)
 }
 

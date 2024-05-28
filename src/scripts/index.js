@@ -53,6 +53,9 @@ function handleSubmitFormForNewAvatar(newAvatarLink) {
             closeCurrentPopup();
             avatarNode.style.backgroundImage = `url(${res.avatar})`;
         })
+        .catch(err => {
+            console.log(err)
+        })
         .finally(() => {
             saveButtonInForm.textContent = originTextInSaveButtons;
         })
@@ -78,6 +81,9 @@ function handleFormSubmitForEditing(newName, newJob) {
             nameOfUserInPage.textContent = userInfo.name;
             descriptionOfUserInPage.textContent = userInfo.about;
         })
+        .catch(err => {
+            console.log(err)
+        })
         .finally(() => {
             saveButtonInForm.textContent = originTextInSaveButtons;
         })
@@ -100,9 +106,14 @@ function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
         link: imgLink,
         likes: []
     }
-    addCard(newCard, true, false);
 
     postNewCard(newCard)
+        .then(card => {
+            addCard(card, true, false);
+        })
+        .catch(err => {
+            console.log(err)
+        })
         .finally(() => {
             saveButtonInForm.textContent = originTextInSaveButtons;
         });
@@ -140,6 +151,7 @@ Promise.all([getInfoAboutUser(), getAllCards()])
 
             addCard(card, isMyCard, isLiked);
         })
-
     })
-
+    .catch(err => {
+        console.log(err)
+    })

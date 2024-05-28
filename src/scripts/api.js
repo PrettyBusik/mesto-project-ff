@@ -1,5 +1,8 @@
 const config = {
     baseUrl: 'https://nomoreparties.co/v1/wff-cohort-14',
+    urlMe:'https://nomoreparties.co/v1/wff-cohort-14/users/me',
+    urlCards: 'https://nomoreparties.co/v1/wff-cohort-14/cards',
+    urlCardLikes: 'https://nomoreparties.co/v1/wff-cohort-14/cards/likes',
     headers: {
         authorization: 'dfe75a01-fd3b-4ce7-b6ac-2e9511af568c',
         'Content-Type': 'application/json'
@@ -7,11 +10,14 @@ const config = {
 }
 
 const handelResult = (res) => {
-    return res.json();
+    if (res.ok){
+        return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
 }
 
 export const getInfoAboutUser = () => {
-    return fetch(`${config.baseUrl}/users/me`, {
+    return fetch(`${config.urlMe}`, {
         method: 'GET',
         headers: config.headers
     })
@@ -19,7 +25,7 @@ export const getInfoAboutUser = () => {
 }
 
 export const getAllCards = () => {
-    return fetch(`${config.baseUrl}/cards`, {
+    return fetch(`${config.urlCards}`, {
         method: 'GET',
         headers: config.headers
     })
@@ -27,7 +33,7 @@ export const getAllCards = () => {
 }
 
 export const saveEditingInProfile = (nameOfUser, descriptionOfUser) => {
-    return fetch(`${config.baseUrl}/users/me`, {
+    return fetch(`${config.urlMe}`, {
         method: 'PATCH',
         headers: config.headers,
         body: JSON.stringify({
@@ -39,22 +45,24 @@ export const saveEditingInProfile = (nameOfUser, descriptionOfUser) => {
 }
 
 export const postNewCard = (card) => {
-    return fetch(`${config.baseUrl}/cards`, {
+    return fetch(`${config.urlCards}`, {
         method: 'POST',
         headers: config.headers,
         body: JSON.stringify(card)
     })
+        .then(handelResult)
 }
 
 export const deleteCardFromServer = (idCard) => {
-    return fetch(`${config.baseUrl}/cards/${idCard}`, {
+    return fetch(`${config.urlCards}/${idCard}`, {
         method: "DELETE",
         headers: config.headers
     })
+        .then(handelResult)
 }
 
 export const setLike = (idCard) => {
-    return fetch(`${config.baseUrl}/cards/likes/${idCard}`, {
+    return fetch(`${config.urlCardLikes}/${idCard}`, {
         method: "PUT",
         headers: config.headers
     })
@@ -62,7 +70,7 @@ export const setLike = (idCard) => {
 }
 
 export const deleteLike = (idCard) => {
-    return fetch(`${config.baseUrl}/cards/likes/${idCard}`, {
+    return fetch(`${config.urlCardLikes}/${idCard}`, {
         method: "DELETE",
         headers: config.headers
     })
@@ -70,7 +78,7 @@ export const deleteLike = (idCard) => {
 }
 
 export const changeAvatar = (avatarLink) => {
-    return fetch(`${config.baseUrl}/users/me/avatar`, {
+    return fetch(`${config.urlMe}/avatar`, {
         method: "PATCH",
         headers: config.headers,
         body: JSON.stringify({avatar: avatarLink})
