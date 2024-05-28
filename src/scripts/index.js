@@ -6,7 +6,7 @@ import {
     subscribeToEditingFormSubmitting,
     subscribeToNewAvatarFormSubmitting
 } from "./forms";
-import {addCard} from "./cards";
+import {creatCardNode} from "./cards";
 import {clearValidation, enableValidation} from "./validation";
 import {getAllCards, getInfoAboutUser, postNewCard, saveEditingInProfile, changeAvatar} from "./api";
 
@@ -21,6 +21,8 @@ const descriptionOfUserInPage = document.querySelector('.profile__description');
 
 
 const originTextInSaveButtons = 'Сохранить';
+
+const listOfCards = document.querySelector('.places__list');
 
 
 const config = {
@@ -156,3 +158,18 @@ Promise.all([getInfoAboutUser(), getAllCards()])
     .catch(err => {
         console.log(err)
     })
+
+
+
+/**
+ *
+ * @param {object} card
+ * @param {boolean} isMyCard
+ * @param {boolean} isLiked
+ */
+
+ function addCard(card, isMyCard, isLiked) {
+    console.log(card)
+    const newCard = creatCardNode(card, isMyCard, isLiked);
+    listOfCards.prepend(newCard);
+}

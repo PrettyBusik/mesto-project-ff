@@ -2,34 +2,16 @@ import {showPopupCard} from "./popup";
 import {deleteCardFromServer, setLike, deleteLike} from "./api";
 
 const cardTemplate = document.querySelector('#card-template').content;
-const listOfCards = document.querySelector('.places__list');
 const popupCard = document.querySelector('.popup_type_image');
 
-
 /**
  *
  * @param {object} card
- * @param {boolean} isMyCard
- * @param {boolean} isLiked
- */
-export function addCard(card, isMyCard, isLiked) {
-    console.log(card)
-    const newCard = creatCardNode(card, handleDeletingButton, handleLike, showLike, handleCardClick, isMyCard, isLiked);
-    listOfCards.prepend(newCard);
-}
-
-/**
- *
- * @param {object} card
- * @param {function} removeCard
- * @param {function} likeCard
- * @param {function} showLike
- * @param {function} clickCard
  * @param {boolean} isMyCard
  * @param {boolean} isLiked
  * @return {Element}
  */
-function creatCardNode(card, removeCard, likeCard, showLike, clickCard, isMyCard, isLiked) {
+ export function creatCardNode(card, isMyCard, isLiked) {
     const newCard = cardTemplate.querySelector('.card').cloneNode(true);
     const cardImg = newCard.querySelector('.card__image');
     const amountOfLikesElement = newCard.querySelector('.card__Likes-amount');
@@ -42,14 +24,14 @@ function creatCardNode(card, removeCard, likeCard, showLike, clickCard, isMyCard
     if (!isMyCard) {
         deleteCardButton.style.display = "none";
     } else {
-        deleteCardButton.addEventListener('click', (event) => removeCard(event, card._id));
+        deleteCardButton.addEventListener('click', (event) => handleDeletingButton(event, card._id));
     }
 
     const likeCardButton = newCard.querySelector('.card__like-button');
-    likeCardButton.addEventListener('click', (ev) => likeCard(ev, card._id));
+    likeCardButton.addEventListener('click', (ev) => handleLike(ev, card._id));
     showLike(newCard, isLiked);
 
-    newCard.addEventListener('click', clickCard)
+    newCard.addEventListener('click', handleCardClick)
 
     return newCard;
 }
