@@ -136,7 +136,8 @@ Promise.all([getInfoAboutUser(), getAllCards()])
 
         myId = user._id;
 
-        allCards.forEach((card) => {
+        const cardsSorted = allCards.reverse();
+        cardsSorted.forEach((card) => {
             let isMyCard = false;
             let isLiked = false;
             if (myId === card.owner._id) {

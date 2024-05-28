@@ -49,5 +49,5 @@ position: absolute;
 }
 
 .profile__image:hover .profile__image-icon {
-  opacity: 1; /* Показываем SVG при наведении */
+  opacity: 1; 
 }

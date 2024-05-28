@@ -13,6 +13,7 @@ const popupCard = document.querySelector('.popup_type_image');
  * @param {boolean} isLiked
  */
 export function addCard(card, isMyCard, isLiked) {
+    console.log(card)
     const newCard = creatCardNode(card, handleDeletingButton, handleLike, showLike, handleCardClick, isMyCard, isLiked);
     listOfCards.prepend(newCard);
 }
