@@ -52,6 +52,7 @@ export function subscribeToNewAvatarFormSubmitting(callback) {
         const newAvatarLink = newAvatarForm.elements.avatar.value;
         showAnotherSaveButtonDuringLoading(newAvatarForm);
         callback(newAvatarLink);
+        newAvatarForm.reset();
     })
 }
 
