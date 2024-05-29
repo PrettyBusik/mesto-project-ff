@@ -7,17 +7,15 @@ export function openPopup(popup) {
     document.addEventListener('keydown', onEscapePress);
 }
 
-export function closeCurrentPopup() {
-    const currentPopup = document.querySelector('.popup_is-opened');
-    if (currentPopup) {
-        currentPopup.classList.remove('popup_is-opened');
-        document.removeEventListener('keydown', onEscapePress);
-    }
 
+export function closePopup(popup) {
+        popup.classList.remove('popup_is-opened');
+        document.removeEventListener('keydown', onEscapePress);
 }
 
 function onEscapePress(event) {
     if (event.key === 'Escape') {
-        closeCurrentPopup();
+        // closeCurrentPopup();
     }
 }
+

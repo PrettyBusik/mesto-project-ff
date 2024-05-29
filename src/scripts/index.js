@@ -1,5 +1,5 @@
 import './../pages/index.css';
-import {closeCurrentPopup, openPopup} from "./popup";
+import {closePopup, openPopup} from "./popup";
 import {
     fillEditingForm,
     subscribeToAddingFormSubmitting,
@@ -39,7 +39,7 @@ const config = {
 popups.forEach(function (popup) {
     popup.addEventListener('mousedown', function (event) {
         if (event.target.classList.contains('popup__close') || event.target.classList.contains('popup')) {
-            closeCurrentPopup();
+            closePopup(popup);
         }
     })
 })
@@ -55,7 +55,7 @@ function handleSubmitFormForNewAvatar(newAvatarLink) {
     changeAvatar(newAvatarLink)
         .then(res => {
             clearInputsInNewAvatarForm();
-            closeCurrentPopup();
+            closePopup(popupAvatar);
             avatarNode.style.backgroundImage = `url(${res.avatar})`;
         })
         .catch(err => {
@@ -84,7 +84,7 @@ function handleFormSubmitForEditing(newName, newJob) {
         .then(userInfo => {
             nameOfUserInPage.textContent = userInfo.name;
             descriptionOfUserInPage.textContent = userInfo.about;
-            closeCurrentPopup();
+            closePopup(popupEdit);
             clearValidation(popupEdit.querySelector('.popup__form'), config);
         })
         .catch(err => {
@@ -116,7 +116,7 @@ function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
         .then(card => {
             addCard(card, true, false);
             clearValidation(popupAdding.querySelector('.popup__form'), config);
-            closeCurrentPopup();
+            closePopup(popupAdding);
         })
         .catch(err => {
             console.log(err)
