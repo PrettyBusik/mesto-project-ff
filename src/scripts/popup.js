@@ -1,16 +1,8 @@
-const imageNode = document.querySelector('.popup__image');
-const titleNode = document.querySelector('.popup__caption');
-
 /**
  *
- * @param {string} imageSrc
- * @param {string} title
  * @param {Element} popupCard
  */
-export function showPopupCard(imageSrc, title, popupCard) {
-    imageNode.src = imageSrc;
-    imageNode.alt = title;
-    titleNode.innerText = title;
+export function showPopupCard(popupCard) {
     openPopup(popupCard);
 }
 

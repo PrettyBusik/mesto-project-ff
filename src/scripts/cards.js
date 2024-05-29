@@ -4,6 +4,9 @@ import {deleteCardFromServer, setLike, deleteLike} from "./api";
 const cardTemplate = document.querySelector('#card-template').content;
 const popupCard = document.querySelector('.popup_type_image');
 
+const imageNode = document.querySelector('.popup__image');
+const titleNode = document.querySelector('.popup__caption');
+
 /**
  *
  * @param {object} card
@@ -11,7 +14,7 @@ const popupCard = document.querySelector('.popup_type_image');
  * @param {boolean} isLiked
  * @return {Element}
  */
- export function creatCardNode(card, isMyCard, isLiked) {
+export function creatCardNode(card, isMyCard, isLiked) {
     const newCard = cardTemplate.querySelector('.card').cloneNode(true);
     const cardImg = newCard.querySelector('.card__image');
     const amountOfLikesElement = newCard.querySelector('.card__Likes-amount');
@@ -41,7 +44,7 @@ function handleDeletingButton(event, idCard) {
         .then(() => {
             event.target.closest('.card').remove();
         })
-        .catch(err=>{
+        .catch(err => {
             console.log(err)
         })
     ;
@@ -58,7 +61,7 @@ function handleLike(event, idCard) {
                 cardLikesAmountElement.innerText = card.likes.length;
 
             })
-            .catch(err=>{
+            .catch(err => {
                 console.log(err)
             })
     } else {
@@ -68,7 +71,7 @@ function handleLike(event, idCard) {
                 cardLikesAmountElement.innerText = card.likes.length;
 
             })
-            .catch(err=>{
+            .catch(err => {
                 console.log(err)
             })
     }
@@ -84,13 +87,16 @@ function showLike(card, isLiked) {
 }
 
 function handleCardClick(event) {
-    const cardNode = event.target.classList.contains('card')? event.target:event.target.closest('.card');
+    const cardNode = event.target.classList.contains('card') ? event.target : event.target.closest('.card');
 
-    
     const imgSrc = cardNode.querySelector('.card__image').src;
     const titleOfCard = cardNode.querySelector('.card__title').innerText;
 
-    showPopupCard(imgSrc, titleOfCard, popupCard);
+    imageNode.src = imgSrc;
+    imageNode.alt = titleOfCard;
+    titleNode.innerText = titleOfCard;
+
+    showPopupCard(popupCard);
 }
 
 
