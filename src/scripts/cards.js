@@ -1,4 +1,4 @@
-import {showPopupCard} from "./popup";
+import {openPopup} from "./popup";
 import {deleteCardFromServer, setLike, deleteLike} from "./api";
 
 const cardTemplate = document.querySelector('#card-template').content;
@@ -96,7 +96,7 @@ function handleCardClick(event) {
     imageNode.alt = titleOfCard;
     titleNode.innerText = titleOfCard;
 
-    showPopupCard(popupCard);
+    openPopup(popupCard);
 }
 
 

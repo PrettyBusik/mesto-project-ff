@@ -1,13 +1,5 @@
 /**
  *
- * @param {Element} popupCard
- */
-export function showPopupCard(popupCard) {
-    openPopup(popupCard);
-}
-
-/**
- *
  * @param {Element} popup
  */
 export function openPopup(popup) {
