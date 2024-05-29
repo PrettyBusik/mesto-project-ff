@@ -4,7 +4,9 @@ import {
     fillEditingForm,
     subscribeToAddingFormSubmitting,
     subscribeToEditingFormSubmitting,
-    subscribeToNewAvatarFormSubmitting
+    subscribeToNewAvatarFormSubmitting,
+    clearInputsInCreateCardForm,
+    clearInputsInNewAvatarForm
 } from "./forms";
 import {creatCardNode} from "./cards";
 import {clearValidation, enableValidation} from "./validation";
@@ -52,6 +54,7 @@ function handleSubmitFormForNewAvatar(newAvatarLink) {
     const saveButtonInForm = popupAvatar.querySelector(config.submitButtonSelector);
     changeAvatar(newAvatarLink)
         .then(res => {
+            clearInputsInNewAvatarForm();
             closeCurrentPopup();
             avatarNode.style.backgroundImage = `url(${res.avatar})`;
         })
@@ -71,7 +74,6 @@ editButton.addEventListener('click', function () {
 
     openPopup(popupEdit);
     fillEditingForm(nameOfUserInPage.innerText, descriptionOfUserInPage.innerText);
-    clearValidation(popupEdit.querySelector('.popup__form'), config);
 });
 
 function handleFormSubmitForEditing(newName, newJob) {
@@ -82,6 +84,8 @@ function handleFormSubmitForEditing(newName, newJob) {
         .then(userInfo => {
             nameOfUserInPage.textContent = userInfo.name;
             descriptionOfUserInPage.textContent = userInfo.about;
+            closeCurrentPopup();
+            clearValidation(popupEdit.querySelector('.popup__form'), config);
         })
         .catch(err => {
             console.log(err)
@@ -89,7 +93,6 @@ function handleFormSubmitForEditing(newName, newJob) {
         .finally(() => {
             saveButtonInForm.textContent = originTextInSaveButtons;
         })
-    closeCurrentPopup();
 }
 
 subscribeToEditingFormSubmitting(handleFormSubmitForEditing);
@@ -112,6 +115,8 @@ function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
     postNewCard(newCard)
         .then(card => {
             addCard(card, true, false);
+            clearValidation(popupAdding.querySelector('.popup__form'), config);
+            closeCurrentPopup();
         })
         .catch(err => {
             console.log(err)
@@ -120,8 +125,7 @@ function handleFormSubmitForAddingCard(nameOfPlace, imgLink) {
             saveButtonInForm.textContent = originTextInSaveButtons;
         });
 
-    clearValidation(popupAdding.querySelector('.popup__form'), config);
-    closeCurrentPopup();
+    clearInputsInCreateCardForm();
 }
 
 subscribeToAddingFormSubmitting(handleFormSubmitForAddingCard);

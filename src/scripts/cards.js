@@ -86,6 +86,7 @@ function showLike(card, isLiked) {
 function handleCardClick(event) {
     const cardNode = event.target.classList.contains('card')? event.target:event.target.closest('.card');
 
+    
     const imgSrc = cardNode.querySelector('.card__image').src;
     const titleOfCard = cardNode.querySelector('.card__title').innerText;
 

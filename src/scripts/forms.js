@@ -31,6 +31,7 @@ export function subscribeToEditingFormSubmitting(callback) {
     })
 }
 
+
 /**
  *
  * @param {function(string, string)} callback
@@ -42,7 +43,6 @@ export function subscribeToAddingFormSubmitting(callback) {
         const newLinkValue = addingForm.elements.link.value;
         showAnotherSaveButtonDuringLoading(addingForm)
         callback(newCityValue, newLinkValue);
-        addingForm.reset();
     })
 }
 
@@ -52,9 +52,17 @@ export function subscribeToNewAvatarFormSubmitting(callback) {
         const newAvatarLink = newAvatarForm.elements.avatar.value;
         showAnotherSaveButtonDuringLoading(newAvatarForm);
         callback(newAvatarLink);
-        newAvatarForm.reset();
     })
 }
+
+export function clearInputsInCreateCardForm() {
+    addingForm.reset();
+}
+
+export function clearInputsInNewAvatarForm() {
+    newAvatarForm.reset();
+}
+
 
 function showAnotherSaveButtonDuringLoading(form) {
     const saveButtonInForm = form.querySelector('.popup__button');
