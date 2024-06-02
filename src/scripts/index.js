@@ -173,7 +173,6 @@ Promise.all([getInfoAboutUser(), getAllCards()])
  */
 
  function addCard(card, isMyCard, isLiked) {
-    console.log(card)
     const newCard = creatCardNode(card, isMyCard, isLiked);
     listOfCards.prepend(newCard);
 }
