@@ -1,4 +1,8 @@
 .profile__description {
+  max-width: 600px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 18px;
   line-height: 22px;
   grid-area: description;

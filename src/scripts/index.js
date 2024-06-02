@@ -8,9 +8,15 @@ import {
     clearInputsInCreateCardForm,
     clearInputsInNewAvatarForm
 } from "./forms";
-import {creatCardNode} from "./cards";
+import {creatCardNode, } from "./cards";
 import {clearValidation, enableValidation} from "./validation";
-import {getAllCards, getInfoAboutUser, postNewCard, saveEditingInProfile, changeAvatar} from "./api";
+import {
+    getAllCards,
+    getInfoAboutUser,
+    postNewCard,
+    saveEditingInProfile,
+    changeAvatar
+} from "./api";
 
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdding = document.querySelector('.popup_type_new-card');
@@ -44,7 +50,7 @@ popups.forEach(function (popup) {
     })
 })
 
-
+//Форма для аватара
 const avatarNode = document.querySelector('.profile__image');
 avatarNode.addEventListener('click', () => {
     openPopup(popupAvatar);
@@ -164,7 +170,6 @@ Promise.all([getInfoAboutUser(), getAllCards()])
     })
 
 
-
 /**
  *
  * @param {object} card
@@ -172,7 +177,10 @@ Promise.all([getInfoAboutUser(), getAllCards()])
  * @param {boolean} isLiked
  */
 
- function addCard(card, isMyCard, isLiked) {
+function addCard(card, isMyCard, isLiked) {
     const newCard = creatCardNode(card, isMyCard, isLiked);
     listOfCards.prepend(newCard);
 }
+
+
+

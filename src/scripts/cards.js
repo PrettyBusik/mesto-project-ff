@@ -40,6 +40,7 @@ export function creatCardNode(card, isMyCard, isLiked) {
 }
 
 function handleDeletingButton(event, idCard) {
+    event.stopPropagation();
     deleteCardFromServer(idCard)
         .then(() => {
             event.target.closest('.card').remove();
@@ -98,5 +99,4 @@ function handleCardClick(event) {
 
     openPopup(popupCard);
 }
-
 
