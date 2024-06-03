@@ -1,5 +1,4 @@
-import {openPopup} from "./popup";
-import {deleteCardFromServer, setLike, deleteLike} from "./api";
+
 
 const cardTemplate = document.querySelector('#card-template').content;
 
@@ -8,6 +7,8 @@ const cardTemplate = document.querySelector('#card-template').content;
  * @param {object} card
  * @param {boolean} isMyCard
  * @param {boolean} isLiked
+ * @param {function} handleCardClick
+ * @param {function} handleLike
  * @return {Element}
  */
 export function creatCardNode(card, isMyCard, isLiked, handleCardClick, handleLike, handleDeletingButton) {
