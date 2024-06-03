@@ -15,7 +15,7 @@ import {
     getInfoAboutUser,
     postNewCard,
     saveEditingInProfile,
-    changeAvatar
+    changeAvatar, setLike, deleteLike, deleteCardFromServer
 } from "./api";
 
 const popupEdit = document.querySelector('.popup_type_edit');
@@ -183,7 +183,7 @@ Promise.all([getInfoAboutUser(), getAllCards()])
  */
 
 function addCard(card, isMyCard, isLiked) {
-    const newCard = creatCardNode(card, isMyCard, isLiked, handleCardClick);
+    const newCard = creatCardNode(card, isMyCard, isLiked, handleCardClick, handleLike, handleDeletingButton);
     listOfCards.prepend(newCard);
 }
 
@@ -201,3 +201,42 @@ function handleCardClick(event) {
 }
 
 
+function handleLike(event, idCard) {
+    event.stopPropagation();
+    const likeButton = event.target;
+    const cardLikesAmountElement = event.target.closest('.card__likes').querySelector('.card__Likes-amount')
+    if (!likeButton.classList.contains('card__like-button_is-active')) {
+        setLike(idCard)
+            .then(card => {
+                likeButton.classList.add('card__like-button_is-active')
+                cardLikesAmountElement.innerText = card.likes.length;
+
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    } else {
+        deleteLike(idCard)
+            .then(card => {
+                likeButton.classList.remove('card__like-button_is-active');
+                cardLikesAmountElement.innerText = card.likes.length;
+
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+}
+
+
+function handleDeletingButton(event, idCard) {
+    event.stopPropagation();
+    deleteCardFromServer(idCard)
+        .then(() => {
+            event.target.closest('.card').remove();
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    ;
+}
