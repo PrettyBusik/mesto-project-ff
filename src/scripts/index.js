@@ -21,11 +21,16 @@ import {
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdding = document.querySelector('.popup_type_new-card');
 const popupAvatar = document.querySelector('.popup_type_avatar');
+const popupCard = document.querySelector('.popup_type_image');
 const popups = document.querySelectorAll('.popup');
 
 
 const nameOfUserInPage = document.querySelector('.profile__title');
 const descriptionOfUserInPage = document.querySelector('.profile__description');
+
+
+const imageNode = document.querySelector('.popup__image');
+const titleNode = document.querySelector('.popup__caption');
 
 
 const originTextInSaveButtons = 'Сохранить';
@@ -178,9 +183,21 @@ Promise.all([getInfoAboutUser(), getAllCards()])
  */
 
 function addCard(card, isMyCard, isLiked) {
-    const newCard = creatCardNode(card, isMyCard, isLiked);
+    const newCard = creatCardNode(card, isMyCard, isLiked, handleCardClick);
     listOfCards.prepend(newCard);
 }
 
+function handleCardClick(event) {
+    const cardNode = event.target.classList.contains('card') ? event.target : event.target.closest('.card');
+
+    const imgSrc = cardNode.querySelector('.card__image').src;
+    const titleOfCard = cardNode.querySelector('.card__title').innerText;
+
+    imageNode.src = imgSrc;
+    imageNode.alt = titleOfCard;
+    titleNode.innerText = titleOfCard;
+
+    openPopup(popupCard);
+}
 
 

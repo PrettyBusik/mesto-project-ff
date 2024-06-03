@@ -2,10 +2,6 @@ import {openPopup} from "./popup";
 import {deleteCardFromServer, setLike, deleteLike} from "./api";
 
 const cardTemplate = document.querySelector('#card-template').content;
-const popupCard = document.querySelector('.popup_type_image');
-
-const imageNode = document.querySelector('.popup__image');
-const titleNode = document.querySelector('.popup__caption');
 
 /**
  *
@@ -14,7 +10,7 @@ const titleNode = document.querySelector('.popup__caption');
  * @param {boolean} isLiked
  * @return {Element}
  */
-export function creatCardNode(card, isMyCard, isLiked) {
+export function creatCardNode(card, isMyCard, isLiked, handleCardClick) {
     const newCard = cardTemplate.querySelector('.card').cloneNode(true);
     const cardImg = newCard.querySelector('.card__image');
     const amountOfLikesElement = newCard.querySelector('.card__Likes-amount');
@@ -87,16 +83,4 @@ function showLike(card, isLiked) {
     }
 }
 
-function handleCardClick(event) {
-    const cardNode = event.target.classList.contains('card') ? event.target : event.target.closest('.card');
-
-    const imgSrc = cardNode.querySelector('.card__image').src;
-    const titleOfCard = cardNode.querySelector('.card__title').innerText;
-
-    imageNode.src = imgSrc;
-    imageNode.alt = titleOfCard;
-    titleNode.innerText = titleOfCard;
-
-    openPopup(popupCard);
-}
 
